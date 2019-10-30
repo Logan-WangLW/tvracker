@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect, withRouter, Switch } from 'react-router-dom';
-import LandingInfo from './components/landing-info';
+import { Route,  withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ShowSearch from './components/show-search';
 import { refreshAuthToken } from './actions/auth';
+
+import LandingInfo from './components/landing-info';
+import ShowSearch from './components/show-search';
 class App extends React.Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.loggedIn && this.props.loggedIn) {

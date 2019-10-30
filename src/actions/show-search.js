@@ -25,7 +25,7 @@ export const fetchTVMazeApiError = (error) => ({
 
 export const fetchTVMazeApi = userSearchQuery => (dispatch, getState) => {
   dispatch(fetchTVMazeApiRequest());
-  const { search} = userSearchQuery;
+  const {search} = userSearchQuery;
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/show-search`, {
     method: 'PUT',
@@ -35,16 +35,49 @@ export const fetchTVMazeApi = userSearchQuery => (dispatch, getState) => {
       'Authorization': `Bearer ${authToken}`
     },
     body: JSON.stringify({
-      id,
-      name,
-      image,
-      status,
-      type,
-      summary
+        search
+    })
+  })
+  .then(res => normalizeResponseErrors(res))
+  .then(res => console.log(res.body))
+  .then(res => res.json())
+  .then(res => dispatch(fetchTVMazeApiSuccess(res)))
+  .catch(err => dispatch(fetchTVMazeApiError(err)));
+}
+
+export const FETCH_SHOWS_REQUEST = 'FETCH_SHOW_REQUEST';
+export const fetchShowsRequest = () => ({
+  type: FETCH_SHOWS_REQUEST,
+});
+
+export const FETCH_SHOWS_SUCCESS = 'FETCH_SHOW_SUCCESS';
+export const fetchShowsSuccess = (results) => ({
+  type: FETCH_SHOWS_SUCCESS,
+  results,
+});
+
+export const FETCH_SHOWS_ERROR = 'FETCH_SHOW_ERROR';
+export const fetchShowsError = (error) => ({
+  type: FETCH_SHOWS_ERROR,
+  error,
+});
+
+export const fetchShows = shows => (dispatch, getState) => {
+  dispatch(fetchShowsRequest());
+  const authToken = getState().auth.authToken;
+  return fetch(`${API_BASE_URL}/show-search-complete`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`
+    },
+    body: JSON.stringify({
+      shows,
     })
   })
   .then(res => normalizeResponseErrors(res))
   .then(res => res.json())
-  .then(res => dispatch(fetchTVMazeApiSuccess(res)))
-  .catch(err => dispatch(fetchTVMazeApiError(err)));
+  .then(res => dispatch(fetchShowsSuccess(res)))
+  .catch(err => dispatch(fetchShowsError(err)))
 }

@@ -1,21 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
+import { toggleShowSearchForm } from '../actions/show-search';
 
-// import ShowSearchForm from './show-search-form';
-// import ShowSearchResults from './event-search-results';
+import ShowSearchForm from './show-search-form';
+// import ShowSearchResults from './show-search-results';
 
-export class EventSearch extends React.Component {
+export class ShowSearch extends React.Component {
+  handleClick() {
+    this.props.dispatch(toggleShowSearchForm());
+  }
 
   render() {
+    let showSearchForm;
+    let formButtonDesc;
+    if (this.props.show.showSearchForm) {
+      showSearchForm = <ShowSearchForm searchResults={this.props.searchResults} />
+      formButtonDesc = 'Close Event Search Form';
+    } else {
+      formButtonDesc = 'Open Event Search Form';
+    }
 
     return (
       <React.Fragment>
-      <div className="outer-div">
-      <div className="header-section">
-        <h1>Show Search</h1>
-        <p>Looking for shows?</p>
+      <div>
+        <div>
+          <h1>Show Search</h1>
+          <p>Looking for shows?</p>
         </div>
+        <button onClick={() => this.handleClick()}>{formButtonDesc}</button>
+        {showSearchForm}
+        <div>
+          {this.props.loading ? 'Loading event search results...' : ''}
+        </div>
+        {/* <ShowSearchResults /> */}
       </div>
       </React.Fragment>
     )
@@ -29,7 +47,10 @@ const mapStateToProps = state => {
     name: `${currentUser.firstName} ${currentUser.lastName}`,
     loggedIn: state.auth.currentUser !== null,
     userId: state.auth.currentUser._id,
+    searchResults: state.show.searchResults,
+    loading: state.show.loading,
+    show: state.show
   };
 };
 
-export default requiresLogin()(connect(mapStateToProps)(EventSearch));
+export default requiresLogin()(connect(mapStateToProps)(ShowSearch));
