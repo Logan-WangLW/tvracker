@@ -4,7 +4,7 @@ import requiresLogin from './requires-login';
 import { toggleShowSearchForm } from '../actions/show-search';
 
 import ShowSearchForm from './show-search-form';
-// import ShowSearchResults from './show-search-results';
+import ShowSearchResults from './show-search-results';
 
 export class ShowSearch extends React.Component {
   handleClick() {
@@ -12,13 +12,14 @@ export class ShowSearch extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     let showSearchForm;
     let formButtonDesc;
     if (this.props.show.showSearchForm) {
       showSearchForm = <ShowSearchForm searchResults={this.props.searchResults} />
-      formButtonDesc = 'Close Event Search Form';
+      formButtonDesc = 'Close Show Search Form';
     } else {
-      formButtonDesc = 'Open Event Search Form';
+      formButtonDesc = 'Open Show Search Form';
     }
 
     return (
@@ -33,7 +34,7 @@ export class ShowSearch extends React.Component {
         <div>
           {this.props.loading ? 'Loading event search results...' : ''}
         </div>
-        {/* <ShowSearchResults /> */}
+        <ShowSearchResults />
       </div>
       </React.Fragment>
     )

@@ -9,6 +9,9 @@ import { required, nonEmpty, isTrimmed } from '../utils/validators.js';
 export class LogInForm extends React.Component {
 
   render() {
+    if (this.props.submitSucceeded) {
+      return <Redirect to="/show-search" />
+    }
     let error;
     if (this.props.error) {
       error = (

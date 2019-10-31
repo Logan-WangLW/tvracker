@@ -22,6 +22,9 @@ export class SignUpForm extends React.Component {
   }
 
   render() {
+    if (this.props.submitSucceeded) {
+      return <Redirect to="/show-search" />
+    }
     let error;
     if (this.props.error) {
       error = (
