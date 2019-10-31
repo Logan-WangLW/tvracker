@@ -1,16 +1,14 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import Input from './input';
-import { fetchTVMazeApi, toggleShowSearchForm } from '../actions/show-search';
+import { fetchTVMazeApi } from '../actions/show-search';
 
 export class ShowSearchForm extends React.Component {
 
   onSubmit(value) {
     let search = value.userSearch;
-    console.log('search:', value.userSearch);
-
     let userSearchQuery = {search};
-    this.props.dispatch(fetchTVMazeApi(userSearchQuery)).then(() => this.props.dispatch(toggleShowSearchForm()));
+    this.props.dispatch(fetchTVMazeApi(userSearchQuery));
   }
 
   render() {

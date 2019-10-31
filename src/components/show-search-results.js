@@ -70,7 +70,6 @@ export class ShowSearchResults extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { currentUser } = state.auth;
   return {
     username: state.auth.currentUser.username,
     loggedIn: state.auth.currentUser !== null,

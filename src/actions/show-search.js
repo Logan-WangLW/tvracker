@@ -1,11 +1,6 @@
 import {API_BASE_URL} from '../config';
 import {normalizeResponseErrors} from './utils';
 
-export const TOGGLE_SHOW_SEARCH_FORM = 'TOGGLE_SHOW_SEARCH_FORM';
-export const toggleShowSearchForm = () => ({
-  type: TOGGLE_SHOW_SEARCH_FORM,
-});
-
 export const FETCH_TVMAZE_API_REQUEST = 'FETCH_TVMAZE_API_REQUEST';
 export const fetchTVMazeApiRequest = () => ({
   type: FETCH_TVMAZE_API_REQUEST,
