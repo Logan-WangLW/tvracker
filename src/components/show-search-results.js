@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
-
+import {addTrackedShowsToUser, fetchTrackedShows} from '../actions/shows';
 export class ShowSearchResults extends React.Component {
 
-  onClick(showInfo) {
-    console.log('show ---> ', showInfo);
-    
-    alert('Show Added!');
-
+  onClick(showId) {
+    console.log('show ---> ', showId);
+    return(
+      this.props.dispatch(addTrackedShowsToUser(showId)),
+      this.props.dispatch(fetchTrackedShows())
+      );
   }
 
   render() {
@@ -20,13 +21,7 @@ export class ShowSearchResults extends React.Component {
     }
     if (shows !== null) {
       searchResults = shows.map((show, index) => {
-        // id: show.id,
-        // name: show.name,
-        // image: show.image,
-        // status: show.status,
-        // type: show.type,
-        // summary: show.summary
-        let showInfo = { name: show.name, id: show.id};
+        let showId = show.id;
         if(show.image){
           if(show.image.medium){
             return (
@@ -37,7 +32,7 @@ export class ShowSearchResults extends React.Component {
                 <li>Image:<img src={show.image.medium} alt={show.name}></img></li>
                 <li>Type: {show.type}</li>
               </ul>
-              <button id={show.id} value={show.name} onClick={() => this.onClick(showInfo)}>Add Show</button>
+              <button id={show.id} value={show.name} onClick={() => this.onClick(showId)}>Add Show</button>
             </div>
           )
           }
@@ -50,7 +45,7 @@ export class ShowSearchResults extends React.Component {
               <li>Image: 'No image available'</li>
               <li>Type:{show.type}</li>
             </ul>
-            <button id={show.id} value={show.name} onClick={() => this.onClick(showInfo)}>Add Show</button>
+            <button id={show.id} value={show.name} onClick={() => this.onClick(showId)}>Add Show</button>
           </div>
         )
       })

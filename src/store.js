@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import authReducer from './reducers/auth';
-import showReducer from './reducers/show-search';
+import showSearchReducer from './reducers/show-search';
+import showsReducer from './reducers/shows';
 
 import thunk from 'redux-thunk';
 import { setAuthToken, refreshAuthToken } from './actions/auth.js';
@@ -12,7 +13,8 @@ const store = createStore(
   combineReducers({
     form: formReducer,
     auth: authReducer,
-    show: showReducer
+    show: showSearchReducer,
+    shows: showsReducer
   }),
   composeWithDevTools(applyMiddleware(thunk))
 );
