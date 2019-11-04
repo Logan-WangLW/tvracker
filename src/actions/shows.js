@@ -69,7 +69,7 @@ export const addTrackedShowsToUser = (id) => (dispatch, getState) => {
     .then(shows => {
       dispatch(addTrackedShowsSuccess(shows))
     });
-}
+};
 //delete a favorite
 export const deleteTrackedShowsToUser = (id) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
@@ -83,5 +83,5 @@ export const deleteTrackedShowsToUser = (id) => (dispatch, getState) => {
     .then(result => result.json())
     .then(shows => {
       dispatch(fetchTrackedShowsSuccess(shows))
-    })
-}
+    });
+};

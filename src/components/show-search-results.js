@@ -4,7 +4,11 @@ import requiresLogin from './requires-login';
 import {addTrackedShowsToUser, fetchTrackedShows} from '../actions/shows';
 export class ShowSearchResults extends React.Component {
 
-  onClick(showId) {
+  componentDidMount(){
+    this.props.dispatch(fetchTrackedShows());
+  }
+
+  addShow(showId) {
     console.log('show ---> ', showId);
     return(
       this.props.dispatch(addTrackedShowsToUser(showId)),
@@ -12,8 +16,12 @@ export class ShowSearchResults extends React.Component {
       );
   }
 
-  render() {
-    console.log(this.props);
+  render(){
+    
+    let trackedShowsArray = this.props.userShows.map((show) => Number(show.id));
+    console.log(trackedShowsArray);
+
+
     const { shows } = this.props;
     let searchResults;
     if (shows === null) {
@@ -22,38 +30,39 @@ export class ShowSearchResults extends React.Component {
     if (shows !== null) {
       searchResults = shows.map((show, index) => {
         let showId = show.id;
-        if(show.image){
-          if(show.image.medium){
+        if(!trackedShowsArray.includes(show.id)){
             return (
               <div key={index}>
               <ul>
                 <li>{show.name}</li>
                 <li>Status: {show.status}</li>
-                <li>Image:<img src={show.image.medium} alt={show.name}></img></li>
+                <li>Image:<img src={show.image ? show.image.medium:'No image available'} alt={show.name}></img></li>
                 <li>Type: {show.type}</li>
               </ul>
-              <button id={show.id} value={show.name} onClick={() => this.onClick(showId)}>Add Show</button>
+              <button id={show.id} value={show.name} onClick={() => {
+                this.addShow(showId);
+                }}>Add Show</button>
             </div>
-          )
-          }
-        }
-        return (
-          <div key={index}>
-            <ul>
-              <li>{show.name}</li>
-              <li>Status:{show.status}</li>
-              <li>Image: 'No image available'</li>
-              <li>Type:{show.type}</li>
-            </ul>
-            <button id={show.id} value={show.name} onClick={() => this.onClick(showId)}>Add Show</button>
-          </div>
-        )
+          )}
+           else {
+             return (
+                  <div key={index}>
+                    <ul>
+                      <li>{show.name}</li>
+                      <li>Status: {show.status}</li>
+                      <li>Image:<img src={show.image ? show.image.medium:'No image available'} alt={show.name}></img></li>
+                      <li>Type: {show.type}</li>
+                    </ul>
+                    <button id={show.id} value={show.name} disabled>Show is tracked!</button>
+                  </div>
+            )}
       })
     }
+    
+    
     if (shows !== null && shows.length === 0) {
       searchResults = <p>The search has returned no results. Try searching with different inputs.</p>
     }
-
 
     return (
       <section>
@@ -69,7 +78,8 @@ const mapStateToProps = state => {
     username: state.auth.currentUser.username,
     loggedIn: state.auth.currentUser !== null,
     userId: state.auth.currentUser._id,
-    shows: state.show.searchResults
+    shows: state.show.searchResults,
+    userShows: state.shows.userShows
   };
 };
 
