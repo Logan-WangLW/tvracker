@@ -5,6 +5,8 @@ import { refreshAuthToken } from './actions/auth';
 
 import LandingInfo from './components/landing-info';
 import ShowSearch from './components/show-search';
+import ShowsSummary from './components/shows-summary';
+import Header from './components/header';
 class App extends React.Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.loggedIn && this.props.loggedIn) {
@@ -36,9 +38,11 @@ stopPeriodicRefresh() {
   render() {
     return (
       <div className="App">
+        <Header/>
       <Switch>
           <Route exact path='/' component={LandingInfo} />
           <Route exact path='/show-search' component={ShowSearch}/>
+          <Route exact path='/shows-summary' component={ShowsSummary}/>
       </Switch>
       </div>
     );

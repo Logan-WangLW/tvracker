@@ -82,6 +82,6 @@ export const deleteTrackedShowsToUser = (id) => (dispatch, getState) => {
   })
     .then(result => result.json())
     .then(shows => {
-      dispatch(fetchTrackedShowsSuccess(shows))
+      dispatch(fetchTrackedShowsSuccess(shows));
     });
 };
