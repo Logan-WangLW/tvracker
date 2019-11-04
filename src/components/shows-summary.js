@@ -12,8 +12,8 @@ export class ShowsSummary extends React.Component {
 
     let shows;
     const username = this.props.user ? this.props.user.username : '';
-    const showsArray = this.props.userShows;
-    console.log(showsArray);
+    const showsArray = [...this.props.userShows];
+    // console.log(showsArray);
 
     if (showsArray.length > 0) {
 

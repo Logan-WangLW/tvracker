@@ -10,7 +10,7 @@ export class LogInForm extends React.Component {
 
   render() {
     if (this.props.submitSucceeded) {
-      return <Redirect to="/show-search" />
+      return <Redirect to="/shows-summary" />
     }
     let error;
     if (this.props.error) {

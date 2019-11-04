@@ -16,7 +16,6 @@ export default (state=initialState, action) => {
       loading: true
     })
   } else if (action.type === FETCH_TVMAZE_API_SUCCESS) {
-    console.log(action);
     return Object.assign({},state,{
       searchResults: action.shows,
       loading: false,

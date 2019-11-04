@@ -29,8 +29,6 @@ export class Navbar extends React.Component {
       <nav>
         <ul>
           <li><Link to={'/'}>Login/Register</Link></li>
-          <li><Link to={'/shows-summary'}> Shows </Link> </li>
-          <li><Link to={'/show-search'}>Search for Shows</Link></li>
         </ul>
 
       </nav>

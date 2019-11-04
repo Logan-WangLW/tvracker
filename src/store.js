@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import authReducer from './reducers/auth';
 import showSearchReducer from './reducers/show-search';
 import showsReducer from './reducers/shows';
+import episodesReducer from './reducers/episodes';
 
 import thunk from 'redux-thunk';
 import { setAuthToken, refreshAuthToken } from './actions/auth.js';
@@ -14,7 +15,8 @@ const store = createStore(
     form: formReducer,
     auth: authReducer,
     show: showSearchReducer,
-    shows: showsReducer
+    shows: showsReducer,
+    episodes: episodesReducer
   }),
   composeWithDevTools(applyMiddleware(thunk))
 );

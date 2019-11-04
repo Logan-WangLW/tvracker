@@ -2,24 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
 import {addTrackedShowsToUser, fetchTrackedShows} from '../actions/shows';
+import {addEpisodes} from '../actions/episodes';
 export class ShowSearchResults extends React.Component {
 
   componentDidMount(){
     this.props.dispatch(fetchTrackedShows());
   }
-
+  
   addShow(showId) {
-    console.log('show ---> ', showId);
-    return(
-      this.props.dispatch(addTrackedShowsToUser(showId)),
-      this.props.dispatch(fetchTrackedShows())
-      );
+
+      (this.props.dispatch(addTrackedShowsToUser(showId)),
+      this.props.dispatch(fetchTrackedShows()))
+        .then(() => this.props.dispatch(addEpisodes(showId)));
   }
 
   render(){
     
     let trackedShowsArray = this.props.userShows.map((show) => Number(show.id));
-    console.log(trackedShowsArray);
+    // console.log(trackedShowsArray);
 
 
     const { shows } = this.props;
