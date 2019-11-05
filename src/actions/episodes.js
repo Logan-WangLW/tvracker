@@ -54,16 +54,20 @@ export const addEpisodesError = error => ({
   error
 });
 
-export const addEpisodes = (id) => (dispatch, getState) => {
+export const addEpisodes = (id, showId) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   dispatch(addEpisodesRequest());
-  fetch(`${API_BASE_URL}/episodes/${id}`, {
+  // console.log(id);
+  fetch(`${API_BASE_URL}/episodes`, {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       authorization: `Bearer ${authToken}`
     },
+    body: JSON.stringify({
+        id, showId
+    }),
   })
     .then(result => result.json())
     .then(episodes => {
